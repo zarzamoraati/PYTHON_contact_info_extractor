@@ -116,8 +116,6 @@ def move_and_clean(path):
     if Path(path).exists() and Path(path).is_file():
          basename=Path(path).name
          basename=basename.replace(".zip","")
-
-        
          try:
              os.mkdir(Path.cwd()/basename)
              base=Path(path).name
@@ -129,7 +127,8 @@ def move_and_clean(path):
          except Exception as e:
              print("There's an error while moving the file...",e)
              
-
+    else:
+        raise Exception(f"The directory: {path}, not contain any file")
 
 class AnyContentWasFound(Exception):
     pass
@@ -149,16 +148,9 @@ def extractor_app():
         
         if status is not False:
             result=compress_report(path=status)
-            try:
-                move_and_clean(result)
-                
-            except Exception as e:
-                print(e)
-
+            move_and_clean(result)
         else:
             print("Ther's an error generating the report")
-
-        # TODO move_report() branche
         
     except Exception as e:
         print("Something happened: ",e)

@@ -1,4 +1,6 @@
-from  extractor_v1 import match_emails,match_phone_number, concatenate_matches, generate_report, compress_report
+from  extractor_v1 import move_and_clean,match_emails,match_phone_number, concatenate_matches, generate_report, compress_report
+import pytest
+
 class TestExtractor:
     def test_match_phones(self):
         message="+1 415.863.9950"
@@ -31,6 +33,8 @@ class TestExtractor:
     
     def test_compress_report(self):
         assert compress_report("pathnoexists") == False
-        
-        
-        
+
+    def test_move_clean(self):
+        with pytest.raises(Exception,match=r'any file') as excinfo:
+            move_and_clean("not_dir")
+        assert excinfo.type is Exception
