@@ -1,0 +1,20 @@
+## High level Overview
+
+# 1. Get the actual text
+# 2. Extract the emails and numbers
+# 3. Match the coincidences
+
+## Braeking down into pieces
+    # Step 1:
+        # copy the text-body you want to match 
+        # pass that text to pyperclip
+        
+    # Step 2:
+        # Build a regex to find emails
+        # Build a regex to find numbers
+        # Match all the coincidences
+    
+    # Strep 3:
+        # Paste/Save all teh coincidences
+        # Show the coincidences
+        # If there are not coincidences show a special message
