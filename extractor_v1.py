@@ -3,6 +3,8 @@ import re
 from typing import Literal
 from pathlib import Path
 from zipfile import ZipFile
+import os
+import shutil
 
 # STEP 1
 
@@ -101,18 +103,33 @@ def compress_report(path:str):
             z.write(path_obj.name)
             z.close()
             print("compressed file succesfully¡¡¡")
-                
+        
         return path
     return False
-            
-
-
-
 
 
 ## Step 6
 
 ## TODO Move report and clean the cwd
+
+def move_and_clean(path):
+    if Path(path).exists() and Path(path).is_file():
+         basename=Path(path).name
+         basename=basename.replace(".zip","")
+
+        
+         try:
+             os.mkdir(Path.cwd()/basename)
+             base=Path(path).name
+             move_path=Path(basename/Path(base)) # Path should take AT LEAST ONE PATH ELEMENT WHEN CONCATENATE MULTIPLE PATHS
+             shutil.move(Path(base),move_path)
+             os.remove(f'contact_info_report.txt')
+            
+             print("Program complet\nExiting....")
+         except Exception as e:
+             print("There's an error while moving the file...",e)
+             
+
 
 class AnyContentWasFound(Exception):
     pass
@@ -129,8 +146,15 @@ def extractor_app():
         
         # TODO INTEGRATE GIT 
         # TODO compress_report() branche
+        
         if status is not False:
-            compress_report(path=status)
+            result=compress_report(path=status)
+            try:
+                move_and_clean(result)
+                
+            except Exception as e:
+                print(e)
+
         else:
             print("Ther's an error generating the report")
 
@@ -141,3 +165,5 @@ def extractor_app():
 
 
 extractor_app()
+
+#print(move_and_clean("report_compres.zip"))
