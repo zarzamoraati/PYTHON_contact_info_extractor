@@ -1,5 +1,4 @@
-from  extractor_v1 import match_emails,match_phone_number, concatenate_matches, generate_report
-
+from  extractor_v1 import match_emails,match_phone_number, concatenate_matches, generate_report, compress_report
 class TestExtractor:
     def test_match_phones(self):
         message="+1 415.863.9950"
@@ -29,7 +28,9 @@ class TestExtractor:
         assert generate_report(content="") == False
         assert type(generate_report(content="something")) == str
         assert len(generate_report(content="something")) > 0
-         
-         
+    
+    def test_compress_report(self):
+        assert compress_report("pathnoexists") == False
+        
         
         

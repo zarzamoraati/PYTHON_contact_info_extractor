@@ -2,6 +2,7 @@ import pyperclip
 import re
 from typing import Literal
 from pathlib import Path
+from zipfile import ZipFile
 
 # STEP 1
 
@@ -92,6 +93,21 @@ def read_report(path:Path):
 ## Step 5
 
 ## TODO compress report
+def compress_report(path:str):
+    path_obj=Path(path)
+    if path_obj.exists() and path_obj.is_file():
+        path="report_compress.zip"
+        with ZipFile(path,"w") as z:
+            z.write(path_obj.name)
+            z.close()
+            print("compressed file succesfully¡¡¡")
+                
+        return path
+    return False
+            
+
+
+
 
 
 ## Step 6
@@ -111,9 +127,15 @@ def extractor_app():
         content_report=concatenate_matches(emails=emails,phones=phones)
         status=generate_report(content=content_report)
         
-        # TODO INTEGRATE GIT
+        # TODO INTEGRATE GIT 
         # TODO compress_report() branche
+        if status is not False:
+            compress_report(path=status)
+        else:
+            print("Ther's an error generating the report")
+
         # TODO move_report() branche
+        
     except Exception as e:
         print("Something happened: ",e)
 
