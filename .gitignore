@@ -1,0 +1,5 @@
+__pycache__
+.pytest_cache
+description.txt
+contact_info_report.txt
+todo_list.txt
